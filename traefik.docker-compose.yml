@@ -24,12 +24,5 @@ services:
             placement:
                 constraints: [node.role == manager]
 
-    transfersh:
-        image: dutchcoders/transfer.sh:latest
-        command: --provider local --basedir /tmp/
-        labels:
-            - "traefik.frontend.rule=Host:transfer.srv.tmpry.com"
-            - "traefik.port=8080"
-
 volumes:
     portainer_data:
