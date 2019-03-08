@@ -25,7 +25,7 @@ To change password, need to either down/up the stack, or replace individually fo
 ## Optional: logging on Google Cloud platform
 
 Install agent:
-- `curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh; sudo systemctl restart docker`
+- `curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh; sudo bash install-logging-agent.sh`
 
 Set Docker to use it for all containers: 
 - `echo '{"log-driver":"gcplogs"}' | sudo tee /etc/docker/daemon.json; sudo systemctl restart docker`
