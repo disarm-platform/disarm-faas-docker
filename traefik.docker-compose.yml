@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+    portainer:
+        image: portainer/portainer
+        command: -H unix:///var/run/docker.sock
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - portainer_data:/data
+        labels:
+            - "traefik.frontend.rule=Host:port.srv.tmpry.com"
+    traefik:
+        image: traefik
+        command: --api --docker #--docker.swarmMode --docker.domain=traefik --docker.watch
+        ports:
+            - "80:80"     # The HTTP port, not the web UI port
+            - "8085:8080" # For debugging
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+        labels:
+            - "traefik.frontend.rule=Host:traefik.srv.tmpry.com"
+            - "traefik.port=8080"
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+
+    transfersh:
+        image: dutchcoders/transfer.sh:latest
+        command: --provider local --basedir /tmp/
+        labels:
+            - "traefik.frontend.rule=Host:transfer.srv.tmpry.com"
+            - "traefik.port=8080"
+
+volumes:
+    portainer_data:
