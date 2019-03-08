@@ -9,7 +9,7 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock
             - portainer_data:/data
         labels:
-            - "traefik.frontend.rule=Host:port.srv.tmpry.com"
+            - "traefik.frontend.rule=Host:port.srv.disarm.io"
     traefik:
         image: traefik
         command: --api --docker
@@ -20,7 +20,7 @@ services:
             # So that Traefik can listen to the Docker events
             - /var/run/docker.sock:/var/run/docker.sock
         labels:
-            - "traefik.frontend.rule=Host:traefik.srv.tmpry.com"
+            - "traefik.frontend.rule=Host:traefik.srv.disarm.io"
             - "traefik.port=8080"
         deploy:
             placement:
