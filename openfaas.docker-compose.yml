@@ -229,7 +229,6 @@ networks:
             - "openfaas=true"
     traefik-net:
         external: true
-            - "openfaas=true"
 
 secrets:
     basic-auth-user:
