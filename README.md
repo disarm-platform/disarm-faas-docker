@@ -10,3 +10,13 @@ Ideally before anything goes down(!), get a copy of the `/functions` JSON respon
 jq -r ".[] | .name,.image" < functions.json | parallel -N 2 http --ignore-stdin -a user:password https://faas.srv.disarm.io/system/functions service={1} image={2}
 ```
 
+
+
+## Changing password
+
+To change password, need to either down/up the stack, or replace individually for these services:
+
+- `func_gateway`
+- `func_faas-swarm`
+- `fun_queue-worker`
+- `func_alertmanager`
