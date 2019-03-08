@@ -30,3 +30,4 @@ Install agent:
 Set Docker to use it for all containers: 
 - `echo '{"log-driver":"gcplogs"}' | sudo tee /etc/docker/daemon.json; sudo systemctl restart docker`
 
+Resources: [from Google here](https://cloud.google.com/community/tutorials/docker-gcplogs-driver) and [from Docker here](https://docs.docker.com/config/containers/logging/gcplogs/)
