@@ -3,8 +3,6 @@ version: "3.3"
 
 services:
     gateway:
-        logging:
-            driver: gcplogs
         ports:
             - 8080:8080
         image: openfaas/gateway:0.11.1
@@ -59,8 +57,6 @@ services:
 
     # Docker Swarm provider
     faas-swarm:
-        logging:
-            driver: gcplogs
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
         image: openfaas/faas-swarm:0.6.1
@@ -92,8 +88,6 @@ services:
             - basic-auth-password
 
     nats:
-        logging:
-            driver: gcplogs
         image: nats-streaming:0.11.2
         # Uncomment the following port mappings if you wish to expose the
         # NATS client and/or management ports you must also
@@ -115,8 +109,6 @@ services:
                     - 'node.platform.os == linux'
 
     queue-worker:
-        logging:
-            driver: gcplogs
         image: openfaas/queue-worker:0.7.1
         networks:
             - functions
@@ -148,8 +140,6 @@ services:
     # Start monitoring
 
     prometheus:
-        logging:
-            driver: gcplogs
         image: prom/prometheus:v2.7.1
         environment:
             no_proxy: "gateway"
@@ -182,8 +172,6 @@ services:
                     memory: 200M
 
     alertmanager:
-        logging:
-            driver: gcplogs
         image: prom/alertmanager:v0.16.1
         environment:
             no_proxy: "gateway"
