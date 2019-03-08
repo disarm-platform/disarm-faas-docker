@@ -199,7 +199,8 @@ services:
         configs:
             - source: alertmanager_config
               target: /alertmanager.yml
-
+        secrets:
+            - basic-auth-password
 
 configs:
     prometheus_config:
@@ -214,9 +215,10 @@ networks:
         driver: overlay
         attachable: true
         labels:
-          - "openfaas=true"
+            - "openfaas=true"
     traefik-net:
         external: true
+            - "openfaas=true"
 
 secrets:
     basic-auth-user:
