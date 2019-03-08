@@ -1,6 +1,6 @@
 # DiSARM OpenFaas server configuration
 
-Basic config for traefik and OpenFaas
+Basic config for traefik and OpenFaas: [wiki](https://github.com/disarm-platform/disarm-faas-docker/wiki) has some instructions
 
 ## Quickly restore many functions
 
