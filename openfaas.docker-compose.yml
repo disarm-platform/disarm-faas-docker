@@ -144,12 +144,12 @@ services:
         environment:
             no_proxy: "gateway"
         configs:
-          - source: prometheus_config
-            target: /etc/prometheus/prometheus.yml
-          - source: prometheus_rules
-            target: /etc/prometheus/alert.rules.yml
+            - source: prometheus_config
+                target: /etc/prometheus/prometheus.yml
+            - source: prometheus_rules
+                target: /etc/prometheus/alert.rules.yml
         command:
-          - '--config.file=/etc/prometheus/prometheus.yml'
+            - "--config.file=/etc/prometheus/prometheus.yml"
         #   - '-storage.local.path=/prometheus'
         ports:
             - 9090:9090
