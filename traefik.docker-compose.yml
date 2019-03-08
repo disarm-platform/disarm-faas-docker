@@ -1,3 +1,4 @@
+---
 version: '3'
 
 services:
@@ -11,12 +12,13 @@ services:
             - "traefik.frontend.rule=Host:port.srv.tmpry.com"
     traefik:
         image: traefik
-        command: --api --docker #--docker.swarmMode --docker.domain=traefik --docker.watch
+        command: --api --docker
         ports:
-            - "80:80"     # The HTTP port, not the web UI port
-            - "8085:8080" # For debugging
+            - "80:80"   # The HTTP port, not the web UI port
+            - "8085:8080"   # For debugging
         volumes:
-            - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+            # So that Traefik can listen to the Docker events
+            - /var/run/docker.sock:/var/run/docker.sock
         labels:
             - "traefik.frontend.rule=Host:traefik.srv.tmpry.com"
             - "traefik.port=8080"
