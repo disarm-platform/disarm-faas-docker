@@ -1,9 +1,10 @@
+---
 version: "3.3"
 
 services:
     gateway:
         logging:
-          driver: gcplogs
+            driver: gcplogs
         ports:
             - 8080:8080
         image: openfaas/gateway:0.11.1
@@ -12,17 +13,25 @@ services:
             - traefik-net
         environment:
             functions_provider_url: "http://faas-swarm:8080/"
-            read_timeout: "5m5s" # Maximum time to read HTTP request
-            write_timeout: "5m5s" # Maximum time to write HTTP response
-            upstream_timeout: "5m" # Maximum duration of upstream function call - should be more than read_timeout and write_timeout
-            dnsrr: "true" # Temporarily use dnsrr in place of VIP while issue persists on PWD
+            read_timeout: "5m5s"    # Maximum time to read HTTP request
+            write_timeout: "5m5s"   # Maximum time to write HTTP response
+            upstream_timeout: "5m"
+            # upstream_timeout: Maximum duration of upstream function call -
+            #   should be more than read_timeout and write_timeout
+            dnsrr: "true"
+            # dnsrr: Temporarily use dnsrr in place of VIP while issue
+            #   persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
-            direct_functions: "true" # Functions are invoked directly over the overlay network
+            direct_functions: "true"
+            # direct_functions: Functions are invoked directly over
+            #   the overlay network
             direct_functions_suffix: ""
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
-            scale_from_zero: "true" # Enable if you want functions to scale from 0/0 to min replica count upon invoke
+            scale_from_zero: "true"
+            # scale_from_zero: Enable if you want functions to scale from 0/0
+            #   to min replica count upon invoke
             max_idle_conns: 1024
             max_idle_conns_per_host: 1024
         deploy:
@@ -51,15 +60,15 @@ services:
     # Docker Swarm provider
     faas-swarm:
         logging:
-          driver: gcplogs
+            driver: gcplogs
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
         image: openfaas/faas-swarm:0.6.1
         networks:
             - functions
         environment:
-            read_timeout: "5m5s" # set both here, and on your functions
-            write_timeout: "5m5s" # set both here, and on your functions
+            read_timeout: "5m5s"    # set both here, and on your functions
+            write_timeout: "5m5s"   # set both here, and on your functions
             DOCKER_API_VERSION: "1.30"
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
@@ -84,10 +93,11 @@ services:
 
     nats:
         logging:
-          driver: gcplogs
+            driver: gcplogs
         image: nats-streaming:0.11.2
         # Uncomment the following port mappings if you wish to expose the
-        # NATS client and/or management ports you must also add `-m 8222` to the command
+        # NATS client and/or management ports you must also
+        # add `-m 8222` to the command
         # ports:
         #     - 4222:4222
         #     - 8222:8222
@@ -106,13 +116,13 @@ services:
 
     queue-worker:
         logging:
-          driver: gcplogs
+            driver: gcplogs
         image: openfaas/queue-worker:0.7.1
         networks:
             - functions
         environment:
             max_inflight: "1"
-            ack_wait: "5m5s" # Max duration of any async task / request
+            ack_wait: "5m5s"    # Max duration of any async task / request
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
         deploy:
@@ -139,15 +149,15 @@ services:
 
     prometheus:
         logging:
-          driver: gcplogs
+            driver: gcplogs
         image: prom/prometheus:v2.7.1
         environment:
             no_proxy: "gateway"
         configs:
             - source: prometheus_config
-                target: /etc/prometheus/prometheus.yml
+              target: /etc/prometheus/prometheus.yml
             - source: prometheus_rules
-                target: /etc/prometheus/alert.rules.yml
+              target: /etc/prometheus/alert.rules.yml
         command:
             - "--config.file=/etc/prometheus/prometheus.yml"
         #   - '-storage.local.path=/prometheus'
@@ -173,7 +183,7 @@ services:
 
     alertmanager:
         logging:
-          driver: gcplogs
+            driver: gcplogs
         image: prom/alertmanager:v0.16.1
         environment:
             no_proxy: "gateway"
@@ -182,7 +192,8 @@ services:
             - '--storage.path=/alertmanager'
         networks:
             - functions
-        # Uncomment the following port mapping if you wish to expose the Prometheus
+        # Uncomment the following port mapping if you wish to
+        # expose the Prometheus
         # Alertmanager UI.
         # ports:
         #     - 9093:9093
