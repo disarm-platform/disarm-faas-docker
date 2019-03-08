@@ -1,0 +1,87 @@
+[{
+  "name": "fn-dbscan-clusterer",
+  "image": "disarm/fn-dbscan-clusterer:0.0.7",
+  "invocationCount": 7,
+  "replicas": 1,
+  "envProcess": "",
+  "availableReplicas": 0,
+  "labels": {
+    "com.openfaas.function": "fn-dbscan-clusterer",
+    "function": "true"
+  },
+  "annotations": null
+}, {
+  "name": "fn-covariate-extractor",
+  "image": "disarm/fn-covariate-extractor:0.0.8",
+  "invocationCount": 48,
+  "replicas": 1,
+  "envProcess": "",
+  "availableReplicas": 0,
+  "labels": {
+    "com.openfaas.function": "fn-covariate-extractor",
+    "function": "true"
+  },
+  "annotations": null
+}, {
+  "name": "fn-prevalence-predictor",
+  "image": "disarm/fn-prevalence-predictor:0.0.3",
+  "invocationCount": 4,
+  "replicas": 1,
+  "envProcess": "",
+  "availableReplicas": 0,
+  "labels": {
+    "com.openfaas.function": "fn-prevalence-predictor",
+    "function": "true"
+  },
+  "annotations": null
+}, {
+  "name": "fn-hotspot-gears_0-0-2",
+  "image": "disarm/fn-hotspot-gears:0.0.2",
+  "invocationCount": 0,
+  "replicas": 1,
+  "envProcess": "",
+  "availableReplicas": 0,
+  "labels": {
+    "com.openfaas.function": "fn-hotspot-gears_0-0-2",
+    "function": "true"
+  },
+  "annotations": null
+}, {
+  "name": "fn-raster-vector-summary-stats",
+  "image": "disarm/fn-raster-vector-summary-stats:0.0.7",
+  "invocationCount": 0,
+  "replicas": 1,
+  "envProcess": "",
+  "availableReplicas": 0,
+  "labels": {
+    "com.openfaas.function": "fn-raster-vector-summary-stats",
+    "com.openfaas.uid": "660429716",
+    "function": "true"
+  },
+  "annotations": null
+}, {
+  "name": "fn-hotspot-gears",
+  "image": "disarm/fn-hotspot-gears:0.0.2",
+  "invocationCount": 0,
+  "replicas": 1,
+  "envProcess": "",
+  "availableReplicas": 0,
+  "labels": {
+    "com.openfaas.function": "fn-hotspot-gears",
+    "function": "true"
+  },
+  "annotations": null
+}, {
+  "name": "longrun",
+  "image": "onlyjsmith/longrun:0.0.6",
+  "invocationCount": 67,
+  "replicas": 1,
+  "envProcess": "node index.js",
+  "availableReplicas": 0,
+  "labels": {
+    "com.openfaas.function": "longrun",
+    "com.openfaas.uid": "337892055",
+    "function": "true"
+  },
+  "annotations": null
+}]
