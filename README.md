@@ -20,3 +20,13 @@ To change password, need to either down/up the stack, or replace individually fo
 - `func_faas-swarm`
 - `fun_queue-worker`
 - `func_alertmanager`
+
+
+## Optional: logging on Google Cloud platform
+
+Install agent:
+- `curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh; sudo systemctl restart docker`
+
+Set Docker to use it for all containers: 
+- `echo '{"log-driver":"gcplogs"}' | sudo tee /etc/docker/daemon.json; sudo systemctl restart docker`
+
