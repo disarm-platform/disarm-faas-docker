@@ -6,23 +6,25 @@ services:
           driver: gcplogs
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.9.7
+        image: openfaas/gateway:0.11.1
         networks:
             - functions
             - traefik-net
         environment:
             functions_provider_url: "http://faas-swarm:8080/"
-            read_timeout:  "300s"        # Maximum time to read HTTP request
-            write_timeout: "300s"        # Maximum time to write HTTP response
-            upstream_timeout: "300s"     # Maximum duration of upstream function call - should be more than read_timeout and write_timeout
-            dnsrr: "true"               # Temporarily use dnsrr in place of VIP while issue persists on PWD
+            read_timeout: "5m5s" # Maximum time to read HTTP request
+            write_timeout: "5m5s" # Maximum time to write HTTP response
+            upstream_timeout: "5m" # Maximum duration of upstream function call - should be more than read_timeout and write_timeout
+            dnsrr: "true" # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
-            direct_functions: "true"    # Functions are invoked directly over the overlay network
+            direct_functions: "true" # Functions are invoked directly over the overlay network
             direct_functions_suffix: ""
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
-            scale_from_zero: "false"
+            scale_from_zero: "true" # Enable if you want functions to scale from 0/0 to min replica count upon invoke
+            max_idle_conns: 1024
+            max_idle_conns_per_host: 1024
         deploy:
             labels:
                 - "traefik.docker.network=traefik-net"
@@ -52,12 +54,12 @@ services:
           driver: gcplogs
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
-        image:  openfaas/faas-swarm:0.4.4
+        image: openfaas/faas-swarm:0.6.1
         networks:
             - functions
         environment:
-            read_timeout:  "300s"   # set both here, and on your functions
-            write_timeout: "300s"   # set both here, and on your functions
+            read_timeout: "5m5s" # set both here, and on your functions
+            write_timeout: "5m5s" # set both here, and on your functions
             DOCKER_API_VERSION: "1.30"
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
@@ -105,12 +107,12 @@ services:
     queue-worker:
         logging:
           driver: gcplogs
-        image: openfaas/queue-worker:0.5.4
+        image: openfaas/queue-worker:0.7.1
         networks:
             - functions
         environment:
             max_inflight: "1"
-            ack_wait: "300s"    # Max duration of any async task / request
+            ack_wait: "5m5s" # Max duration of any async task / request
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
         deploy:
@@ -138,7 +140,7 @@ services:
     prometheus:
         logging:
           driver: gcplogs
-        image: prom/prometheus:v2.3.1
+        image: prom/prometheus:v2.7.1
         environment:
             no_proxy: "gateway"
         configs:
@@ -172,7 +174,7 @@ services:
     alertmanager:
         logging:
           driver: gcplogs
-        image: prom/alertmanager:v0.15.0
+        image: prom/alertmanager:v0.16.1
         environment:
             no_proxy: "gateway"
         command:
@@ -200,12 +202,12 @@ services:
 
 
 configs:
-     prometheus_config:
-         file: ./prometheus/prometheus.yml
-     prometheus_rules:
-         file: ./prometheus/alert.rules.yml
-     alertmanager_config:
-         file: ./prometheus/alertmanager.yml
+    prometheus_config:
+        file: ./prometheus/prometheus.yml
+    prometheus_rules:
+        file: ./prometheus/alert.rules.yml
+    alertmanager_config:
+        file: ./prometheus/alertmanager.yml
 
 networks:
     functions:
