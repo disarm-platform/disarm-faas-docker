@@ -21,6 +21,11 @@ To change password, need to either down/up the stack, or replace individually fo
 - `fun_queue-worker`
 - `func_alertmanager`
 
+## Optional: monitoring on Google Cloud platform
+
+Install agent:
+- `curl -sSO https://dl.google.com/cloudagents/install-monitoring-agent.sh; sudo bash install-monitoring-agent.sh`
+
 
 ## Optional: logging on Google Cloud platform
 
