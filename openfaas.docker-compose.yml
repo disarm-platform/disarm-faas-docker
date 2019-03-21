@@ -11,9 +11,9 @@ services:
             - traefik-net
         environment:
             functions_provider_url: "http://faas-swarm:8080/"
-            read_timeout: "5m5s"    # Maximum time to read HTTP request
-            write_timeout: "5m5s"   # Maximum time to write HTTP response
-            upstream_timeout: "5m"
+            read_timeout: "15m5s"    # Maximum time to read HTTP request
+            write_timeout: "15m5s"   # Maximum time to write HTTP response
+            upstream_timeout: "15m"
             # upstream_timeout: Maximum duration of upstream function call -
             #   should be more than read_timeout and write_timeout
             dnsrr: "true"
@@ -63,8 +63,8 @@ services:
         networks:
             - functions
         environment:
-            read_timeout: "5m5s"    # set both here, and on your functions
-            write_timeout: "5m5s"   # set both here, and on your functions
+            read_timeout: "15m5s"    # set both here, and on your functions
+            write_timeout: "15m5s"   # set both here, and on your functions
             DOCKER_API_VERSION: "1.30"
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
@@ -114,7 +114,7 @@ services:
             - functions
         environment:
             max_inflight: "1"
-            ack_wait: "5m5s"    # Max duration of any async task / request
+            ack_wait: "15m5s"    # Max duration of any async task / request
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
         deploy:
