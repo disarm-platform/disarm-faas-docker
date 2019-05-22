@@ -34,3 +34,7 @@ Set Docker to use it for all containers:
 - `echo '{"log-driver":"gcplogs"}' | sudo tee /etc/docker/daemon.json; sudo systemctl restart docker`
 
 Resources: [from Google here](https://cloud.google.com/community/tutorials/docker-gcplogs-driver) and [from Docker here](https://docs.docker.com/config/containers/logging/gcplogs/)
+
+## Set cron job to prune unused docker files
+- `crontab -e`
+- to run the command everyday at 4am insert `0 4 * * * /usr/bin/docker system prune -f`
