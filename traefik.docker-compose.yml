@@ -17,16 +17,12 @@ services:
             - traefik-net
     traefik:
         image: traefik
-        # For initial setup:
-        # command: --api --docker --docker.swarmmode --docker.domain=srv.locational.io --docker.watch
-        command: --api --docker --docker.swarmmode --docker.domain=srv.disarm.io --docker.watch
         # For production: remove the `--api` flag, and the 8085:8080 port mapping below.
-        # command: --docker --docker.swarmmode --docker.domain=srv.disarm.io --docker.watch
-        # command: --api --docker # Think this line was original on DiSARM server
+        command: --api --docker --docker.swarmmode --docker.domain=srv.disarm.io --docker.watch
         ports:
             - "80:80"   # The HTTP port, not the web UI port
             - "443:443"
-            - "8085:8080"   # For debugging
+            - "8085:8080"   # Traefik UI dashboard, for debugging and initial setup
         volumes:
             - ./acme:/acme
             - ./traefik.toml:/traefik.toml
