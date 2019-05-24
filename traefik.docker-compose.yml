@@ -28,7 +28,6 @@ services:
             - "443:443"
             - "8085:8080"   # For debugging
         volumes:
-        volumes:
             - ./acme:/acme
             - ./traefik.toml:/traefik.toml
             - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
